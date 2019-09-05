@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="login_form">
-            <div class="top">登陆</div>
+            <div class="top">注册</div>
             <div class="center">
                 <div class="outLine">
                     <span class="my_span"></span>
@@ -10,13 +10,15 @@
                 <div class="outLine">
                     <span class="my_span1"></span>
                     <input class="my_input" v-model="upwd" type="password" placeholder="请输入密码">
-                    <p v-show="show_R" class="rong_msg">{{show_R_M}}</p>
                 </div>
-                <button class="my_btn" @click='log'>登陆</button>
+                <div class="outLine">
+                    <span class="my_span2"></span>
+                    <input class="my_input" v-model="phone" type="text" placeholder="请输入手机号">
+                </div>
+                <button class="my_btn" @click='reg'>注册</button>
             </div>
-            <div class="bottom">
-                <span  >忘记密码 ?</span>
-                <span  @click='reg'>快速注册>></span>
+            <div  class="bottom">
+                <span  @click='log'>快速登陆>></span>
             </div>
         </div>
     </div>
@@ -27,57 +29,58 @@ export default {
         return{
             uname:'',
             upwd:'',
-            show_R:false,
-            show_R_M:''
+            phone:''
         }
     },
     methods:{
-        //登陆
+        // 登陆
         log(){
+           this.$router.push('/login')
+        },
+        // 注册
+        reg(){
             if(this.uname==="" ){
                 alert('用户名不能为空')
             }else if(this.upwd===""){
                 alert('密码不能为空')
+            }else if(this.phone===""){
+                alert('手机号不能为空')
             }else{
-                  var url='/user/login';
-            var params=`uname=${this.uname}&upwd=${this.upwd}`;
-            this.axios.post(url,params).then(res=>{
-                if(res.data.code==1){
-                    this.$router.push('/index')
-                }else{
-                    this.show_R=true;
-                    this.show_R_M=res.data.msg;
-                }
-                console.log(res)
-            })
+               var urlt='/user/unm';
+               var paramst=`uname=${this.uname}`;
+               this.axios.post(urlt,paramst).then(res=>{
+                   if(res.data.code==-1){
+                       alert('用户名已存在')
+                   }else{
+                        var url='/user/reg';
+                        var params=`uname=${this.uname}&upwd=${this.upwd}&phone=${this.phone}`;
+                        this.axios.post(url,params).then(res=>{
+                            if(res.data.code==1){
+                                alert('注册成功');
+                                this.$router.push('/index');
+                            }else{
+                                alert('注册失败，请检查用户名,密码,手机号');
+                            }
+                        });
+                   }
+               })
             }
-          
-        },
-        // 注册
-        reg(){
-            this.$router.push('/reg');
         }
     }
 }
 </script>
 <style scoped>
-.rong_msg{
-    color:#f00;
-    position: absolute;
-    top:16px;
-    left:48px;
-}
 .bottom{
     /* width:225px; */
     position: relative;
-    top:-55px;
+    top:-25px;
     color:#aa202c;
     font-size:12px;
     display: flex;
     justify-content: space-around;
     cursor: pointer;
 }
-.my_span,.my_span1{
+.my_span,.my_span1,.my_span2{
     position: absolute;
     display: inline-block;
     width:32px;
@@ -89,6 +92,10 @@ export default {
 .my_span1{
     background:#eeeeee url(/img/main/mm.png) no-repeat center center;
     background-size:50%; 
+}
+.my_span2{
+    background:#eeeeee url(/img/main/sj.png) no-repeat center center;
+    background-size:60%; 
 }
 .top{
     color:#aa202c;
@@ -116,7 +123,7 @@ export default {
     background: rgb(170,32,44);
     height:32px;
     color:#fff;
-    margin-top:12px;
+    /* margin-top:12px; */
     width:225px;
     position: relative;
     left: -2px;
