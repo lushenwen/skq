@@ -3,11 +3,16 @@ import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Index from './views/Index.vue'
 import Reg from './views/Reg.vue'
+import Header from './components/Header.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path:'/header',
+      component:Header
+    },
     {
       path:'/reg',
       component:Reg
@@ -22,7 +27,7 @@ export default new Router({
     },
     {
       path: '/',
-     redirect:'/login'
+     redirect:'/header'
     }
   ]
 })

@@ -1,0 +1,25 @@
+body{
+    margin:0;padding:0;
+    width:100%;
+    background: #f5f5f5;
+}
+.my_width{
+    width:1200px;
+    margin:0 auto;
+}
+.font_12,.font_12_w,.font_20,.font_14{
+    font-size:12px;
+    color:#323232;
+    font-family: "Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif!important;
+}
+.font_12_w{
+    font-weight: 700;
+}
+.font_20{
+    font-size: 20px;
+    color:#e4393c;
+}
+.font_14{
+    font-size: 14px;
+    color:#fff;
+}
